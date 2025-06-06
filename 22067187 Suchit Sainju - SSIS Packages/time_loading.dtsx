@@ -1,0 +1,717 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/28/2025 2:14:48 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-5523PM3"
+  DTS:CreatorName="DESKTOP-5523PM3\DELL"
+  DTS:DTSID="{A943A216-E789-4B15-A501-44E07215DAC9}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package3"
+  DTS:PackageType="5"
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{5BB75632-ED24-442F-AA05-20E5162B5EC4}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.cw_db]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{0C436A36-F56C-4BF8-97D7-F6698AE970CC}"
+      DTS:ObjectName="LocalHost.cw_db">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=cw_db;Integrated Security=True;TrustServerCertificate=True;Application Name=SSIS-Package3-{0C436A36-F56C-4BF8-97D7-F6698AE970CC}LocalHost.cw_db;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Time Dimension Loading"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{050EBF58-A212-44BD-952A-B5F3D5CFD2C1}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Time Dimension Loading"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Time Dimension Loading\ADO NET Destination"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="ADO NET Destination"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."time_dim_table"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Time Dimension Loading\ADO NET Destination.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.cw_db]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.cw_db]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[date]"
+                      cachedDataType="date"
+                      cachedName="date"
+                      externalMetadataColumnId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[date]"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[date]" />
+                    <inputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[time]"
+                      cachedDataType="dbTime"
+                      cachedName="time"
+                      externalMetadataColumnId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[time]"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[time]" />
+                    <inputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[year]"
+                      cachedDataType="i4"
+                      cachedName="year"
+                      externalMetadataColumnId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[year]"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[year]" />
+                    <inputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[month]"
+                      cachedDataType="i4"
+                      cachedName="month"
+                      externalMetadataColumnId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[month]"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[month]" />
+                    <inputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[holiday]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="holiday"
+                      externalMetadataColumnId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[holiday]"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[holiday]" />
+                    <inputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[season]"
+                      cachedDataType="wstr"
+                      cachedLength="6"
+                      cachedName="season"
+                      externalMetadataColumnId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[season]"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[season]" />
+                    <inputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[quarter]"
+                      cachedDataType="i4"
+                      cachedName="quarter"
+                      externalMetadataColumnId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[quarter]"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[quarter]" />
+                    <inputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[dayOfWeek]"
+                      cachedDataType="i4"
+                      cachedName="dayOfWeek"
+                      externalMetadataColumnId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[dayOfWeek]"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[dayOfWeek]" />
+                    <inputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[timestamp]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="timestamp"
+                      externalMetadataColumnId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[timestamp]"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[timestamp]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[timeKey]"
+                      dataType="i4"
+                      name="timeKey" />
+                    <externalMetadataColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[timestamp]"
+                      dataType="dbTimeStamp"
+                      name="timestamp" />
+                    <externalMetadataColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[date]"
+                      dataType="dbTimeStamp"
+                      name="date" />
+                    <externalMetadataColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[time]"
+                      dataType="dbTime2"
+                      name="time" />
+                    <externalMetadataColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[dayOfWeek]"
+                      dataType="wstr"
+                      length="10"
+                      name="dayOfWeek" />
+                    <externalMetadataColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[month]"
+                      dataType="wstr"
+                      length="10"
+                      name="month" />
+                    <externalMetadataColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[holiday]"
+                      dataType="wstr"
+                      length="3"
+                      name="holiday" />
+                    <externalMetadataColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[quarter]"
+                      dataType="i4"
+                      name="quarter" />
+                    <externalMetadataColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[year]"
+                      dataType="i4"
+                      name="year" />
+                    <externalMetadataColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[season]"
+                      dataType="wstr"
+                      length="10"
+                      name="season" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Time Dimension Loading\ADO NET Destination.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Time Dimension Loading\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Time Dimension Loading\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Time Dimension Loading\ADO NET Source"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="ADO NET Source"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT DISTINCT TRY_CAST(ORIGINDATETIME_TR AS DATETIME) AS datetime_value 
+FROM clean_trip_data
+UNION
+SELECT DISTINCT TRY_CAST(DESTINATIONDATETIME_TR AS DATETIME)
+FROM clean_trip_data;</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."clean_trip_data"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Time Dimension Loading\ADO NET Source.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.cw_db]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.cw_db]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[datetime_value]"
+                      lineageId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]"
+                      name="datetime_value"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[datetime_value]"
+                      dataType="dbTimeStamp"
+                      name="datetime_value" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[datetime_value]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[datetime_value]"
+                      name="datetime_value" />
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Time Dimension Loading\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Time Dimension Loading\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Time Dimension Loading\Derived Column.Inputs[Derived Column Input].Columns[datetime_value]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="datetime_value"
+                      lineageId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Time Dimension Loading\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[date]"
+                      name="date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_DATE)#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_DATE)datetime_value</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[time]"
+                      dataType="dbTime"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[time]"
+                      name="time"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_DBTIME)#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_DBTIME)datetime_value</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[year]"
+                      name="year"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[YEAR](#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">YEAR(datetime_value)</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[month]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[month]"
+                      name="month"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[MONTH](#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">MONTH(datetime_value)</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[holiday]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="3"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[holiday]"
+                      name="holiday"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">([DATEPART]("dw",#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]}) == 1 || [DATEPART]("dw",#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]}) == 7) ? "Yes" : "No"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DATEPART("dw",datetime_value) == 1 || DATEPART("dw",datetime_value) == 7) ? "Yes" : "No"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[season]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="6"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[season]"
+                      name="season"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[DATEPART]("month",#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]}) == 12 || [DATEPART]("month",#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]}) == 1 || [DATEPART]("month",#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]}) == 2 ? "Winter" : [DATEPART]("month",#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]}) &gt;= 3 &amp;&amp; [DATEPART]("month",#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]}) &lt;= 5 ? "Spring" : [DATEPART]("month",#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]}) &gt;= 6 &amp;&amp; [DATEPART]("month",#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]}) &lt;= 8 ? "Summer" : "Fall"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">DATEPART("month",datetime_value) == 12 || DATEPART("month",datetime_value) == 1 || DATEPART("month",datetime_value) == 2 ? "Winter" : DATEPART("month",datetime_value) &gt;= 3 &amp;&amp; DATEPART("month",datetime_value) &lt;= 5 ? "Spring" : DATEPART("month",datetime_value) &gt;= 6 &amp;&amp; DATEPART("month",datetime_value) &lt;= 8 ? "Summer" : "Fall"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[quarter]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[quarter]"
+                      name="quarter"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[DATEPART]("quarter",#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">DATEPART("quarter",datetime_value)</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[dayOfWeek]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[dayOfWeek]"
+                      name="dayOfWeek"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[DATEPART]("weekday",#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">DATEPART("weekday",datetime_value)</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[timestamp]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output].Columns[timestamp]"
+                      name="timestamp"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output].Columns[datetime_value]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">datetime_value</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Time Dimension Loading\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Time Dimension Loading.Paths[ADO NET Source Output]"
+              endId="Package\Time Dimension Loading\Derived Column.Inputs[Derived Column Input]"
+              name="ADO NET Source Output"
+              startId="Package\Time Dimension Loading\ADO NET Source.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Time Dimension Loading.Paths[Derived Column Output]"
+              endId="Package\Time Dimension Loading\ADO NET Destination.Inputs[ADO NET Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Time Dimension Loading\Derived Column.Outputs[Derived Column Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="194.4,41.6"
+          Id="Package\Time Dimension Loading"
+          TopLeft="101.928571633843,97.2647058019176" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Time Dimension Loading">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Time Dimension Loading\Derived Column"
+          TopLeft="251.214286237348,179.088235141961" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Time Dimension Loading\ADO NET Source"
+          TopLeft="239.07142906864,34.5588235039406" />
+        <NodeLayout
+          Size="178,42"
+          Id="Package\Time Dimension Loading\ADO NET Destination"
+          TopLeft="241.42857194251,296.705882092867" />
+        <EdgeLayout
+          Id="Package\Time Dimension Loading.Paths[Derived Column Output]"
+          TopLeft="329.321429089929,221.088235141961">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,75.617646950906"
+              Start="0,0"
+              End="0,68.117646950906">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,68.117646950906" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Time Dimension Loading.Paths[ADO NET Source Output]"
+          TopLeft="318.07142906864,76.5588235039406">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="10.142857168708,102.52941163802"
+              Start="0,0"
+              End="10.142857168708,95.0294116380204">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.2647058190102" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,47.2647058190102"
+                    Point2="0,51.2647058190102"
+                    Point3="4,51.2647058190102" />
+                  <mssgle:LineSegment
+                    End="6.14285716870802,51.2647058190102" />
+                  <mssgle:CubicBezierSegment
+                    Point1="6.14285716870802,51.2647058190102"
+                    Point2="10.142857168708,51.2647058190102"
+                    Point3="10.142857168708,55.2647058190102" />
+                  <mssgle:LineSegment
+                    End="10.142857168708,95.0294116380204" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Time Dimension Loading\ADO NET Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Time Dimension Loading\ADO NET Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

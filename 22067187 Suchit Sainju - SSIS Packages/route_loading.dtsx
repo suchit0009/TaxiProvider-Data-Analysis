@@ -1,0 +1,1098 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/23/2025 3:38:03 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-5523PM3"
+  DTS:CreatorName="DESKTOP-5523PM3\DELL"
+  DTS:DTSID="{A12A6444-F35F-457E-AF77-FEB410C61E50}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="route_loading"
+  DTS:PackageType="5"
+  DTS:VersionBuild="18"
+  DTS:VersionGUID="{B9240D3D-1DBB-428D-ADD6-802E04EB8534}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[destination_connection]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{2C620DD2-F546-44B6-9EA4-284C457B0378}"
+      DTS:ObjectName="destination_connection">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=cw_db;Integrated Security=True;TrustServerCertificate=True;Application Name=SSIS-RouteDimension-{2C620DD2-F546-44B6-9EA4-284C457B0378}LocalHost.cw_db 1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[source_connection]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{FF4B1486-F2B3-4802-BF6D-C30A166B57BB}"
+      DTS:ObjectName="source_connection">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=cw_db;Integrated Security=True;TrustServerCertificate=True;Application Name=SSIS-RouteDimension-{FF4B1486-F2B3-4802-BF6D-C30A166B57BB}LocalHost.cw_db;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Route Dimension Load"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{F577B8D0-B92C-432A-8D13-9AFAA1A88909}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Route Dimension Load"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Route Dimension Load\ADO NET Destination"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="ADO NET Destination"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dim"."route_dim_table"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Route Dimension Load\ADO NET Destination.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[destination_connection]"
+                  connectionManagerRefId="Package.ConnectionManagers[destination_connection]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[ORIGINCITY]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ORIGINCITY"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[originCity]"
+                      lineageId="Package\Route Dimension Load\Aggregate.Outputs[Aggregate Output 1].Columns[ORIGINCITY]" />
+                    <inputColumn
+                      refId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[DESTINATIONCITY]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="DESTINATIONCITY"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[destinationCity]"
+                      lineageId="Package\Route Dimension Load\Aggregate.Outputs[Aggregate Output 1].Columns[DESTINATIONCITY]" />
+                    <inputColumn
+                      refId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[popularityIndex]"
+                      cachedDataType="ui8"
+                      cachedName="popularityIndex"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[popularityIndex]"
+                      lineageId="Package\Route Dimension Load\Aggregate.Outputs[Aggregate Output 1].Columns[popularityIndex]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[route_key]"
+                      dataType="i4"
+                      name="route_key" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[originCity]"
+                      dataType="wstr"
+                      length="50"
+                      name="originCity" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[destinationCity]"
+                      dataType="wstr"
+                      length="50"
+                      name="destinationCity" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[popularityIndex]"
+                      dataType="i4"
+                      name="popularityIndex" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Route Dimension Load\ADO NET Destination.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Route Dimension Load\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Route Dimension Load\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Route Dimension Load\ADO NET Source"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="ADO NET Source"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"staging"."TAXI_TRIP"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Route Dimension Load\ADO NET Source.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[source_connection]"
+                  connectionManagerRefId="Package.ConnectionManagers[source_connection]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[OBJECTID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[OBJECTID]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[OBJECTID]"
+                      name="OBJECTID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[TRIPTYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TRIPTYPE]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[TRIPTYPE]"
+                      name="TRIPTYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[FAREAMOUNT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[FAREAMOUNT]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[FAREAMOUNT]"
+                      name="FAREAMOUNT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[GRATUITYAMOUNT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[GRATUITYAMOUNT]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[GRATUITYAMOUNT]"
+                      name="GRATUITYAMOUNT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[SURCHARGEAMOUNT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[SURCHARGEAMOUNT]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[SURCHARGEAMOUNT]"
+                      name="SURCHARGEAMOUNT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[EXTRAFAREAMOUNT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[EXTRAFAREAMOUNT]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[EXTRAFAREAMOUNT]"
+                      name="EXTRAFAREAMOUNT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[TOLLAMOUNT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TOLLAMOUNT]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[TOLLAMOUNT]"
+                      name="TOLLAMOUNT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[TOTALAMOUNT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TOTALAMOUNT]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[TOTALAMOUNT]"
+                      name="TOTALAMOUNT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[PAYMENTTYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[PAYMENTTYPE]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[PAYMENTTYPE]"
+                      name="PAYMENTTYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGINCITY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGINCITY]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGINCITY]"
+                      name="ORIGINCITY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGINSTATE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGINSTATE]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGINSTATE]"
+                      name="ORIGINSTATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGINZIP]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGINZIP]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGINZIP]"
+                      name="ORIGINZIP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATIONCITY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATIONCITY]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATIONCITY]"
+                      name="DESTINATIONCITY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATIONSTATE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATIONSTATE]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATIONSTATE]"
+                      name="DESTINATIONSTATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATIONZIP]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATIONZIP]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATIONZIP]"
+                      name="DESTINATIONZIP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[MILEAGE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[MILEAGE]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[MILEAGE]"
+                      name="MILEAGE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DURATION]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DURATION]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DURATION]"
+                      name="DURATION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGIN_BLOCK_LATITUDE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGIN_BLOCK_LATITUDE]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGIN_BLOCK_LATITUDE]"
+                      name="ORIGIN_BLOCK_LATITUDE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGIN_BLOCK_LONGITUDE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGIN_BLOCK_LONGITUDE]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGIN_BLOCK_LONGITUDE]"
+                      name="ORIGIN_BLOCK_LONGITUDE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGIN_BLOCKNAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGIN_BLOCKNAME]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGIN_BLOCKNAME]"
+                      name="ORIGIN_BLOCKNAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATION_BLOCK_LAT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATION_BLOCK_LAT]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATION_BLOCK_LAT]"
+                      name="DESTINATION_BLOCK_LAT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATION_BLOCK_LONG]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATION_BLOCK_LONG]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATION_BLOCK_LONG]"
+                      name="DESTINATION_BLOCK_LONG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATION_BLOCKNAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATION_BLOCKNAME]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATION_BLOCKNAME]"
+                      name="DESTINATION_BLOCKNAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[AIRPORT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[AIRPORT]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[AIRPORT]"
+                      name="AIRPORT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGINDATETIME_TR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGINDATETIME_TR]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGINDATETIME_TR]"
+                      name="ORIGINDATETIME_TR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATIONDATETIME_TR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATIONDATETIME_TR]"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATIONDATETIME_TR]"
+                      name="DESTINATIONDATETIME_TR"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[OBJECTID]"
+                      dataType="wstr"
+                      length="50"
+                      name="OBJECTID" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TRIPTYPE]"
+                      dataType="wstr"
+                      length="50"
+                      name="TRIPTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[FAREAMOUNT]"
+                      dataType="wstr"
+                      length="50"
+                      name="FAREAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[GRATUITYAMOUNT]"
+                      dataType="wstr"
+                      length="50"
+                      name="GRATUITYAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[SURCHARGEAMOUNT]"
+                      dataType="wstr"
+                      length="50"
+                      name="SURCHARGEAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[EXTRAFAREAMOUNT]"
+                      dataType="wstr"
+                      length="50"
+                      name="EXTRAFAREAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TOLLAMOUNT]"
+                      dataType="wstr"
+                      length="50"
+                      name="TOLLAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TOTALAMOUNT]"
+                      dataType="wstr"
+                      length="50"
+                      name="TOTALAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[PAYMENTTYPE]"
+                      dataType="wstr"
+                      length="50"
+                      name="PAYMENTTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGINCITY]"
+                      dataType="wstr"
+                      length="50"
+                      name="ORIGINCITY" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGINSTATE]"
+                      dataType="wstr"
+                      length="50"
+                      name="ORIGINSTATE" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGINZIP]"
+                      dataType="wstr"
+                      length="50"
+                      name="ORIGINZIP" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATIONCITY]"
+                      dataType="wstr"
+                      length="50"
+                      name="DESTINATIONCITY" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATIONSTATE]"
+                      dataType="wstr"
+                      length="50"
+                      name="DESTINATIONSTATE" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATIONZIP]"
+                      dataType="wstr"
+                      length="50"
+                      name="DESTINATIONZIP" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[MILEAGE]"
+                      dataType="wstr"
+                      length="50"
+                      name="MILEAGE" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DURATION]"
+                      dataType="wstr"
+                      length="50"
+                      name="DURATION" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGIN_BLOCK_LATITUDE]"
+                      dataType="wstr"
+                      length="50"
+                      name="ORIGIN_BLOCK_LATITUDE" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGIN_BLOCK_LONGITUDE]"
+                      dataType="wstr"
+                      length="50"
+                      name="ORIGIN_BLOCK_LONGITUDE" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGIN_BLOCKNAME]"
+                      dataType="wstr"
+                      length="50"
+                      name="ORIGIN_BLOCKNAME" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATION_BLOCK_LAT]"
+                      dataType="wstr"
+                      length="50"
+                      name="DESTINATION_BLOCK_LAT" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATION_BLOCK_LONG]"
+                      dataType="wstr"
+                      length="50"
+                      name="DESTINATION_BLOCK_LONG" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATION_BLOCKNAME]"
+                      dataType="wstr"
+                      length="50"
+                      name="DESTINATION_BLOCKNAME" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[AIRPORT]"
+                      dataType="wstr"
+                      length="50"
+                      name="AIRPORT" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[ORIGINDATETIME_TR]"
+                      dataType="wstr"
+                      length="50"
+                      name="ORIGINDATETIME_TR" />
+                    <externalMetadataColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DESTINATIONDATETIME_TR]"
+                      dataType="wstr"
+                      length="50"
+                      name="DESTINATIONDATETIME_TR" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[OBJECTID]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[OBJECTID]"
+                      name="OBJECTID" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TRIPTYPE]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TRIPTYPE]"
+                      name="TRIPTYPE" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[FAREAMOUNT]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[FAREAMOUNT]"
+                      name="FAREAMOUNT" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[GRATUITYAMOUNT]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[GRATUITYAMOUNT]"
+                      name="GRATUITYAMOUNT" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[SURCHARGEAMOUNT]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[SURCHARGEAMOUNT]"
+                      name="SURCHARGEAMOUNT" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[EXTRAFAREAMOUNT]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[EXTRAFAREAMOUNT]"
+                      name="EXTRAFAREAMOUNT" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TOLLAMOUNT]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TOLLAMOUNT]"
+                      name="TOLLAMOUNT" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TOTALAMOUNT]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TOTALAMOUNT]"
+                      name="TOTALAMOUNT" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[PAYMENTTYPE]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[PAYMENTTYPE]"
+                      name="PAYMENTTYPE" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGINCITY]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGINCITY]"
+                      name="ORIGINCITY" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGINSTATE]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGINSTATE]"
+                      name="ORIGINSTATE" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGINZIP]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGINZIP]"
+                      name="ORIGINZIP" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATIONCITY]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATIONCITY]"
+                      name="DESTINATIONCITY" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATIONSTATE]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATIONSTATE]"
+                      name="DESTINATIONSTATE" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATIONZIP]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATIONZIP]"
+                      name="DESTINATIONZIP" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[MILEAGE]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[MILEAGE]"
+                      name="MILEAGE" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DURATION]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DURATION]"
+                      name="DURATION" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGIN_BLOCK_LATITUDE]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGIN_BLOCK_LATITUDE]"
+                      name="ORIGIN_BLOCK_LATITUDE" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGIN_BLOCK_LONGITUDE]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGIN_BLOCK_LONGITUDE]"
+                      name="ORIGIN_BLOCK_LONGITUDE" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGIN_BLOCKNAME]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGIN_BLOCKNAME]"
+                      name="ORIGIN_BLOCKNAME" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATION_BLOCK_LAT]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATION_BLOCK_LAT]"
+                      name="DESTINATION_BLOCK_LAT" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATION_BLOCK_LONG]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATION_BLOCK_LONG]"
+                      name="DESTINATION_BLOCK_LONG" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATION_BLOCKNAME]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATION_BLOCKNAME]"
+                      name="DESTINATION_BLOCKNAME" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[AIRPORT]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[AIRPORT]"
+                      name="AIRPORT" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGINDATETIME_TR]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ORIGINDATETIME_TR]"
+                      name="ORIGINDATETIME_TR" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATIONDATETIME_TR]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DESTINATIONDATETIME_TR]"
+                      name="DESTINATIONDATETIME_TR" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Route Dimension Load\Aggregate"
+              componentClassID="Microsoft.Aggregate"
+              contactInfo="Aggregate;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Aggregates data with functions such as Average, Sum, Count, Max, and Min. For example, group data to compute the sum of sales per product or the average visits per day."
+              name="Aggregate"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                  name="KeyScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                  name="Keys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                  name="CountDistinctScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                  name="CountDistinctKeys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage by which memory can be extended during the aggregation. Valid values are between 1 and 100."
+                  name="AutoExtendFactor">25</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Route Dimension Load\Aggregate.Inputs[Aggregate Input 1]"
+                  name="Aggregate Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Route Dimension Load\Aggregate.Inputs[Aggregate Input 1].Columns[ORIGINCITY]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ORIGINCITY"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGINCITY]" />
+                    <inputColumn
+                      refId="Package\Route Dimension Load\Aggregate.Inputs[Aggregate Input 1].Columns[DESTINATIONCITY]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="DESTINATIONCITY"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATIONCITY]" />
+                    <inputColumn
+                      refId="Package\Route Dimension Load\Aggregate.Inputs[Aggregate Input 1].Columns[GRATUITYAMOUNT]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="GRATUITYAMOUNT"
+                      lineageId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[GRATUITYAMOUNT]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Route Dimension Load\Aggregate.Outputs[Aggregate Output 1]"
+                  name="Aggregate Output 1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                      name="KeyScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                      name="Keys" />
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Route Dimension Load\Aggregate.Outputs[Aggregate Output 1].Columns[ORIGINCITY]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\Aggregate.Outputs[Aggregate Output 1].Columns[ORIGINCITY]"
+                      name="ORIGINCITY">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[ORIGINCITY]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Route Dimension Load\Aggregate.Outputs[Aggregate Output 1].Columns[DESTINATIONCITY]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Route Dimension Load\Aggregate.Outputs[Aggregate Output 1].Columns[DESTINATIONCITY]"
+                      name="DESTINATIONCITY">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[DESTINATIONCITY]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Route Dimension Load\Aggregate.Outputs[Aggregate Output 1].Columns[popularityIndex]"
+                      dataType="ui8"
+                      lineageId="Package\Route Dimension Load\Aggregate.Outputs[Aggregate Output 1].Columns[popularityIndex]"
+                      name="popularityIndex">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output].Columns[GRATUITYAMOUNT]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Route Dimension Load.Paths[ADO NET Source Output]"
+              endId="Package\Route Dimension Load\Aggregate.Inputs[Aggregate Input 1]"
+              name="ADO NET Source Output"
+              startId="Package\Route Dimension Load\ADO NET Source.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Route Dimension Load.Paths[Aggregate Output 1]"
+              endId="Package\Route Dimension Load\ADO NET Destination.Inputs[ADO NET Destination Input]"
+              name="Aggregate Output 1"
+              startId="Package\Route Dimension Load\Aggregate.Outputs[Aggregate Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="184,41.6"
+          Id="Package\Route Dimension Load"
+          TopLeft="283.500000276736,82.3823528667738" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Route Dimension Load">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="158.4,41.6"
+          Id="Package\Route Dimension Load\ADO NET Source"
+          TopLeft="129.07142883448,53.6764705460068" />
+        <NodeLayout
+          Size="126.4,41.6"
+          Id="Package\Route Dimension Load\Aggregate"
+          TopLeft="159.071428898342,132.151350741663" />
+        <NodeLayout
+          Size="177.6,41.6"
+          Id="Package\Route Dimension Load\ADO NET Destination"
+          TopLeft="152.642857392224,225.911764538979" />
+        <EdgeLayout
+          Id="Package\Route Dimension Load.Paths[Aggregate Output 1]"
+          TopLeft="222.271428898342,173.751350741663">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="19.171428493882,52.160413797316"
+              Start="0,0"
+              End="19.171428493882,44.660413797316">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.080206898658" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.080206898658"
+                    Point2="0,26.080206898658"
+                    Point3="4,26.080206898658" />
+                  <mssgle:LineSegment
+                    End="15.171428493882,26.080206898658" />
+                  <mssgle:CubicBezierSegment
+                    Point1="15.171428493882,26.080206898658"
+                    Point2="19.171428493882,26.080206898658"
+                    Point3="19.171428493882,30.080206898658" />
+                  <mssgle:LineSegment
+                    End="19.171428493882,44.660413797316" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Route Dimension Load.Paths[ADO NET Source Output]"
+          TopLeft="207.87142883448,95.2764705460068">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="14.4000000638619,36.8748801956559"
+              Start="0,0"
+              End="14.4000000638619,29.3748801956559">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.437440097828" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.437440097828"
+                    Point2="0,18.437440097828"
+                    Point3="4,18.437440097828" />
+                  <mssgle:LineSegment
+                    End="10.4000000638619,18.437440097828" />
+                  <mssgle:CubicBezierSegment
+                    Point1="10.4000000638619,18.437440097828"
+                    Point2="14.4000000638619,18.437440097828"
+                    Point3="14.4000000638619,22.437440097828" />
+                  <mssgle:LineSegment
+                    End="14.4000000638619,29.3748801956559" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Route Dimension Load\ADO NET Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Route Dimension Load\ADO NET Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

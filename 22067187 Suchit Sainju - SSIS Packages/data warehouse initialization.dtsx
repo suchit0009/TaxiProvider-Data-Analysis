@@ -1,0 +1,458 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/6/2025 1:41:45 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-5523PM3"
+  DTS:CreatorName="DESKTOP-5523PM3\DELL"
+  DTS:DTSID="{981D28EB-4804-4149-A7D3-E6B05F143391}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="13"
+  DTS:VersionGUID="{C4F4EE3F-26D6-4CB0-AEEF-AB0C4CE99D5D}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[destination source]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{CC7922F3-2241-4DEE-A06B-57E2F6CF0BD0}"
+      DTS:ObjectName="destination source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=BigDataDWH;Integrated Security=True;TrustServerCertificate=True;Application Name=SSIS-Package1-{CC7922F3-2241-4DEE-A06B-57E2F6CF0BD0}LocalHost.cw_db;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[raw source]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{C396B95A-083C-43D6-9AF1-1435B95EF130}"
+      DTS:ObjectName="raw source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=cw_db;Integrated Security=True;TrustServerCertificate=True;Application Name=SSIS-Package1-{C396B95A-083C-43D6-9AF1-1435B95EF130}LocalHost.cw_db;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Initialize Data Warehouse"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{FF24270D-A8BA-4AFE-8A3B-29FC4C56B2B5}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Initialize Data Warehouse">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Initialize Data Warehouse\Create Airport Dimension"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{49ACFA33-B41E-41F2-AF6E-3FF4DBDA1648}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Create Airport Dimension"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{CC7922F3-2241-4DEE-A06B-57E2F6CF0BD0}"
+              SQLTask:SqlStatementSource="CREATE TABLE dim.airport_dim_table(&#xA;&#x9;airportKey INT IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;isAirport VARCHAR(3)&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Initialize Data Warehouse\Create Block Dimension"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{C2A0ED29-6618-4EFE-A660-85C0E3BE2366}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Create Block Dimension"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{CC7922F3-2241-4DEE-A06B-57E2F6CF0BD0}"
+              SQLTask:SqlStatementSource="CREATE TABLE dim.block_dim_table (&#xA;    blockKey INT IDENTITY(1,1) PRIMARY KEY,&#xA;    latitued DECIMAL(10, 6),&#xA;    longitude DECIMAL(10, 6),&#xA;    blockname VARCHAR(100),&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Initialize Data Warehouse\Create Fact"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{01DFD6AC-75A6-45D0-A35E-D0F2A743FFD2}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Create Fact"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{CC7922F3-2241-4DEE-A06B-57E2F6CF0BD0}"
+              SQLTask:SqlStatementSource="CREATE TABLE fact.fact_table (&#xA;    trip_id INT IDENTITY(1,1) PRIMARY KEY,&#xA;    pickUpTimeKey INT,&#xA;&#x9;dropOffTimeKey INT,&#xA;&#x9;originLocationKey INT,&#xA;&#x9;destLocationKey INT,&#xA;&#x9;originBlockKey INT,&#xA;&#x9;destBlockKey INT,&#xA;&#x9;airportKey INT,&#xA;&#x9;rideKey INT,&#xA;    paymentKey INT,&#xA;    routeKey INT,&#xA;    baseFareAmount DECIMAL(10,2),&#xA;    tollAmount DECIMAL(10,2),&#xA;    extraFareAmount DECIMAL(10,2),&#xA;    surchargeAmount DECIMAL(5,2),&#xA;    gratuityAmount DECIMAL(5,2),&#xA;    mileage DECIMAL(10,2),&#xA;    duration INT,&#xA;&#x9;gratuityPercentage DECIMAL(29,13),&#xA;    profitPerMile DECIMAL(26,13),&#xA;    tripSatisfactionScore DECIMAL(23,13),&#xA;    surchargePercentage DECIMAL(29,13),&#xA;&#xA;&#xA;    FOREIGN KEY (pickUpTimeKey) REFERENCES dim.time_dim_table(timeKey),&#xA;&#x9;FOREIGN KEY (dropOffTimeKey) REFERENCES dim.time_dim_table(timeKey),&#xA;&#x9;FOREIGN KEY (originLocationKey) REFERENCES dim.location_dim_table(locationKey),&#xA;&#x9;FOREIGN KEY (destLocationKey) REFERENCES dim.location_dim_table(locationKey),&#xA;&#x9;FOREIGN KEY (originBlockKey) REFERENCES dim.block_dim_table(blockKey),&#xA;&#x9;FOREIGN KEY (destBlockKey) REFERENCES dim.block_dim_table(blockKey),&#xA;    FOREIGN KEY (paymentKey) REFERENCES dim.payment_dim_table(paymentKey),&#xA;&#x9;FOREIGN KEY (airportKey) REFERENCES dim.airport_dim_table(airportKey),&#xA;    FOREIGN KEY (routeKey) REFERENCES dim.route_dim_table(routeKey),&#xA;&#x9;FOREIGN KEY (rideKey) REFERENCES dim.ride_dim_table(rideTypeKey),&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Initialize Data Warehouse\Create Location Dimension"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{9F77B064-DF9C-4346-A8EF-E04BA6253D52}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Create Location Dimension"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{CC7922F3-2241-4DEE-A06B-57E2F6CF0BD0}"
+              SQLTask:SqlStatementSource="CREATE TABLE dim.location_dim_table (&#xA;    locationKey INT IDENTITY(1,1) PRIMARY KEY,&#xA;    city VARCHAR(100) NOT NULL,&#xA;    [state] VARCHAR(50) NOT NULL,&#xA;    zipCode VARCHAR(20) NOT NULL&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Initialize Data Warehouse\Create Paymrnt Dimension"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{A8C82C20-99C2-4ADC-834B-B3778D9CCB8E}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Create Paymrnt Dimension"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{CC7922F3-2241-4DEE-A06B-57E2F6CF0BD0}"
+              SQLTask:SqlStatementSource="CREATE TABLE dim.payment_dim_table(&#xA;&#x9;paymentKey INT IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;paymentType VARCHAR(50),&#xA;&#x9;paymentTypeName VARCHAR(50)&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Initialize Data Warehouse\Create Ride Dimension"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{82E28299-7318-46AC-951C-736C63251281}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Create Ride Dimension"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{CC7922F3-2241-4DEE-A06B-57E2F6CF0BD0}"
+              SQLTask:SqlStatementSource="CREATE TABLE dim.ride_dim_table (&#xA;    rideTypeKey INT IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;rideOriginCity VARCHAR(50),&#xA;&#x9;rideDestCity VARCHAR(50),&#xA;    rideCategory VARCHAR(50),&#xA;    rideType VARCHAR(50)&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Initialize Data Warehouse\Create Route Dimenion"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{1834CA37-9DF3-4032-B2C8-6F1CE63811BB}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Create Route Dimenion"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{CC7922F3-2241-4DEE-A06B-57E2F6CF0BD0}"
+              SQLTask:SqlStatementSource="CREATE TABLE dim.route_dim_table (&#xA;    routeKey INT IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;routeOriginCity VARCHAR(50),&#xA;&#x9;routeDestCity VARCHAR(50),&#xA;    popularityIndex INT&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Initialize Data Warehouse\Create Time Dimension"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{344EB214-A70C-492B-AF2C-A243FBC79E6B}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Create Time Dimension"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{CC7922F3-2241-4DEE-A06B-57E2F6CF0BD0}"
+              SQLTask:SqlStatementSource="CREATE TABLE dim.time_dim_table (&#xA;    timeKey INT IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[timestamp] DATETIME,&#xA;    [date] DATE,&#xA;    [time] TIME,&#xA;    [dayOfWeek] VARCHAR(10),&#xA;    [month] VARCHAR(10),&#xA;    holiday VARCHAR(3),&#xA;    [quarter] INT,&#xA;    [year] INT,&#xA;    season VARCHAR(10)&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{B87DF95F-66F2-4200-8162-53A2A6842DBB}"
+          DTS:From="Package\Initialize Data Warehouse\Create Time Dimension"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Initialize Data Warehouse\Create Location Dimension" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{B53DCDAE-F2B7-48C6-B834-D999F0562A9F}"
+          DTS:From="Package\Initialize Data Warehouse\Create Location Dimension"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Initialize Data Warehouse\Create Block Dimension" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{B565CE0F-593C-4075-85E9-9C181BAFDB2C}"
+          DTS:From="Package\Initialize Data Warehouse\Create Block Dimension"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Initialize Data Warehouse\Create Airport Dimension" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{CECB0A8F-E6ED-40F8-95FF-F7607D949446}"
+          DTS:From="Package\Initialize Data Warehouse\Create Airport Dimension"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Initialize Data Warehouse\Create Route Dimenion" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint 4]"
+          DTS:CreationName=""
+          DTS:DTSID="{ED2146A8-F685-4B86-B22F-7E752C90F9E9}"
+          DTS:From="Package\Initialize Data Warehouse\Create Route Dimenion"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4"
+          DTS:To="Package\Initialize Data Warehouse\Create Ride Dimension" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint 5]"
+          DTS:CreationName=""
+          DTS:DTSID="{84FE446F-BDF5-4C25-B729-1046A5FD8A3A}"
+          DTS:From="Package\Initialize Data Warehouse\Create Ride Dimension"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 5"
+          DTS:To="Package\Initialize Data Warehouse\Create Paymrnt Dimension" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint 6]"
+          DTS:CreationName=""
+          DTS:DTSID="{7F55CCFE-0EC8-4ED7-B5F9-80D292492769}"
+          DTS:From="Package\Initialize Data Warehouse\Create Paymrnt Dimension"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 6"
+          DTS:To="Package\Initialize Data Warehouse\Create Fact" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="188,41.6"
+          Id="Package\Initialize Data Warehouse\Create Time Dimension"
+          TopLeft="23.9857145609294,19.1705881682646" />
+        <NodeLayout
+          Size="208,41.6"
+          Id="Package\Initialize Data Warehouse\Create Location Dimension"
+          TopLeft="302.771429430526,16.8705881454747" />
+        <NodeLayout
+          Size="189.6,41.6"
+          Id="Package\Initialize Data Warehouse\Create Block Dimension"
+          TopLeft="319.07142923894,91.1470587484564" />
+        <NodeLayout
+          Size="196.8,41.6"
+          Id="Package\Initialize Data Warehouse\Create Airport Dimension"
+          TopLeft="26.342857413511,92.5764704320567" />
+        <NodeLayout
+          Size="185.6,41.6"
+          Id="Package\Initialize Data Warehouse\Create Ride Dimension"
+          TopLeft="323.24285778604,177.264705779128" />
+        <EdgeLayout
+          Id="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint]"
+          TopLeft="211.985714560929,38.8205881568696">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="90.7857148695967,0"
+              Start="0,0"
+              End="83.2857148695967,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="83.2857148695967,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint 1]"
+          TopLeft="410.321429334733,58.4705881454747">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.6764706029818"
+              Start="0,0"
+              End="0,25.1764706029818">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.1764706029818" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint 2]"
+          TopLeft="319.07142923894,112.661764590257">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-95.9285718254289,0"
+              Start="0,0"
+              End="-88.4285718254289,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-88.4285718254289,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="188,41.6"
+          Id="Package\Initialize Data Warehouse\Create Route Dimenion"
+          TopLeft="30.6571431931792,179.423529203303" />
+        <EdgeLayout
+          Id="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint 3]"
+          TopLeft="124.700000303345,134.176470432057">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.2470587712463"
+              Start="0,0"
+              End="0,37.7470587712463">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.7470587712463" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint 4]"
+          TopLeft="218.657143193179,199.144117491215">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="104.585714592861,0"
+              Start="0,0"
+              End="97.085714592861,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="97.085714592861,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="132,41.6"
+          Id="Package\Initialize Data Warehouse\Create Fact"
+          TopLeft="68.30000040446,269.805882070077" />
+        <NodeLayout
+          Size="204,41.6"
+          Id="Package\Initialize Data Warehouse\Create Paymrnt Dimension"
+          TopLeft="319.357143661501,267.817646768586" />
+        <EdgeLayout
+          Id="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint 5]"
+          TopLeft="418.700000723771,218.864705779128">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.9529409894586"
+              Start="0,0"
+              End="0,41.4529409894586">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.4529409894586" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Initialize Data Warehouse.PrecedenceConstraints[Constraint 6]"
+          TopLeft="319.357143661501,289.611764419332">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-119.057143257041,0"
+              Start="0,0"
+              End="-111.557143257041,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-111.557143257041,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="550.4,375.2"
+          Size="550.4,418.4"
+          Id="Package\Initialize Data Warehouse"
+          TopLeft="64.0714286961119,28.4411764504794" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
