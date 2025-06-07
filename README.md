@@ -4,16 +4,18 @@ A complete end-to-end data project leveraging **SQL (SSMS)** for querying, **SSI
 
 ## 🔍 Key Insights
 
-- **Peak Fare Uplift**: 1.34× during high-demand hours  
-- **Airport Fare Ratio**: 1.75× higher than non-airport rides  
-- **Top Cities**: Washington & Arlington lead in volume and revenue  
-- **Seasonal Trend**: Spring sees the highest ride activity
+- **Urban Hotspots**: Washington and Arlington dominate in ride volume and revenue  
+- **Airport Fare Ratio**: Airport trips cost 1.75× more than regular rides  
+- **Peak Fare Uplift**: Fares increase 1.34× during high-demand hours  
+- **Seasonal Demand Peaks**: Spring leads in ride activity — timing for promos
 
-## 🎯 Marketing Use Cases
+## 🎯  Business Use Cases
 
-- Geo-targeted ads in high-demand zones  
-- Referral boosts in top-performing cities  
-- Peak-hour and airport ride credits
+- **Dynamic Pricing Strategy**: Use peak uplift and airport premiums to optimize revenue across hours and zones  
+- **Hyperlocal Marketing**: Run city-specific campaigns based on top destinations and usage density  
+- **Smart Expansion Plans**: Use regional patterns to identify where to launch new services or fleet expansion  
+- **Loyalty & Retention Programs**: Offer airport and peak-hour credits to high-frequency users, improving long-term CLV
+
 
 ## 📁 Files
 
