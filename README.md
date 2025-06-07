@@ -25,5 +25,3 @@ A complete end-to-end data project leveraging **SQL (SSMS)** for querying, **SSI
 - `SSIS Packages/` – ETL workflows
 
 📖 **Read more** on Medium: [Medium Article](https://medium.com/@suchitsainju01/data-to-decision-how-i-transformed-2-5m-taxi-trips-using-big-data-power-bi-5748af0d6282)  
-*(Replace with your actual Medium link)*
-
